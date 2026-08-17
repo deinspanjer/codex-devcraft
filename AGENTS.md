@@ -14,6 +14,6 @@ Every `SKILL.md` is either user-invoked (`policy.allow_implicit_invocation: fals
 
 [`ask-devcraft`](./plugins/codex-devcraft/skills/ask-devcraft/SKILL.md) is the router that maps every user-reachable skill and how they relate. The same trigger that re-syncs a docs page applies to it: whenever you add, rename, remove, or change how a user-reachable skill fits the flows, re-read `ask-devcraft`'s `SKILL.md` and update it so the map stays accurate — a new skill it never mentions, or a stale one it still routes to, is a router that lies.
 
-The Codex plugin manifest is `plugins/codex-devcraft/.codex-plugin/plugin.json`; the repo marketplace is `.agents/plugins/marketplace.json`. Keep the plugin and package versions aligned, and run the plugin validator after changing the manifest or installable skill layout.
+The Codex plugin manifest is `plugins/codex-devcraft/.codex-plugin/plugin.json`; its `version` is the release source of truth. The repo marketplace is `.agents/plugins/marketplace.json` and has no version. For shipped behavior, installation, or compatibility changes, add a concise entry under `[Unreleased]` in `CHANGELOG.md`. An explicit release task must receive the target bump from the user and use `scripts/version.py`; run the plugin validator after changing the manifest or installable skill layout.
 
 Maintainers can run `scripts/link-skills.sh` to link the installable skills into `~/.agents/skills` for local development. This is not the user install path.

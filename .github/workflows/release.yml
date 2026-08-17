@@ -1,37 +1,57 @@
 name: Release
 
 on:
+  pull_request:
   push:
-    branches:
-      - main
+    branches: [main]
 
-concurrency: ${{ github.workflow }}-${{ github.ref }}
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
-  release:
-    name: Version
+  version:
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.version.outputs.changed }}
+      current: ${{ steps.version.outputs.current }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - run: python3 scripts/version.py verify
+      - run: python3 -m unittest scripts/test_version.py -v
+      - id: version
+        env:
+          BEFORE: ${{ github.event.before }}
+        run: |
+          current=$(python3 scripts/version.py current)
+          changed=$(python3 scripts/version.py changed --before "$BEFORE")
+          echo "current=$current" >> "$GITHUB_OUTPUT"
+          echo "changed=$changed" >> "$GITHUB_OUTPUT"
+
+  publish:
+    needs: version
+    if: github.event_name == 'push' && needs.version.outputs.changed == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      pull-requests: write
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
         with:
-          node-version: 22
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Create Version Pull Request
-        uses: changesets/action@v1
-        with:
-          version: npm run version
-          publish: npx changeset tag
-          commit: "chore: version skills"
-          title: "chore: version skills"
+          fetch-depth: 0
+      - name: Publish GitHub release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ needs.version.outputs.current }}
+        run: |
+          notes=$(mktemp)
+          trap 'rm -f "$notes"' EXIT
+          python3 scripts/version.py notes "$VERSION" > "$notes"
+          gh release create "v$VERSION" \
+            --target "$GITHUB_SHA" \
+            --title "Codex Devcraft v$VERSION" \
+            --notes-file "$notes"

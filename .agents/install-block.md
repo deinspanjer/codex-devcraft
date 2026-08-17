@@ -1,6 +1,6 @@
 # The canonical install block
 
-One install story, one wording. `README.md`, `.changeset/*`, and every page under `docs/` must say this and nothing else. Change it here first, then propagate.
+One install story, one wording. `README.md` and every page under `docs/` must say this and nothing else. Change it here first, then propagate.
 
 ## Codex marketplace
 

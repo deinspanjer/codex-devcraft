@@ -6,7 +6,7 @@ It does not teach from what the [model](https://www.aihero.dev/ai-coding-diction
 
 ## When to reach for it
 
-You invoke this by typing `/teach` — the [agent](https://www.aihero.dev/ai-coding-dictionary/agent) won't reach for it on its own.
+You invoke this by typing `$teach` — the [agent](https://www.aihero.dev/ai-coding-dictionary/agent) won't reach for it on its own.
 
 Reach for it when the learning is the project: a language, a framework, a codebase you have just joined, yoga, shaders, a certification. It is not the tool for one explanation in passing.
 
@@ -55,14 +55,14 @@ Lessons are built from **components** in `assets/`: stylesheets, quiz widgets, s
 
 ## Common questions
 
-**Where does it put the files? Mine ended up in `~/.claude/skills`.**
-A real, open bug ([#377](https://github.com/mattpocock/skills/issues/377)). `SKILL.md` uses `./` for two different roots at once: `./MISSION-FORMAT.md` and its siblings really do sit next to `SKILL.md` in the installed skill, while `./lessons/`, `./reference/`, `./learning-records/` and `./assets/` are meant to be in your directory. An agent that resolves the first kind against the skill's install directory goes on to resolve the second kind there too, and writes your course into the skill folder. Check where the first lesson landed before you build on it, and name the directory explicitly when you start rather than relying on "the current directory" being understood.
+**Where does it put the files? Mine ended up in `~/.agents/skills`.**
+A real, open bug ([#377](https://github.com/mattpocock/skills/issues/377)). `SKILL.md` uses `./` for two different roots at once: `./MISSION-FORMAT.md` and its siblings really do sit next to `SKILL.md` in the installed skill, while `./lessons/`, `./reference/`, `./learning-records/` and `./assets/` are meant to be in your directory. If Codex resolves the first kind against the skill's install directory, it can go on to resolve the second kind there too and write your course into the skill folder. Check where the first lesson landed before you build on it, and name the directory explicitly when you start rather than relying on "the current directory" being understood.
 
 **Do I stay in one session, or start a new one per lesson?**
-All three approaches work — staying in the same session, re-invoking `/teach` in a new session, or opening a new session in the same folder. Each lesson is its own invocation. The folder is the continuity, not the conversation. Common practice is to open a fresh session in the workspace and say `/teach next lesson for <topic>`.
+All three approaches work — staying in the same session, re-invoking `$teach` in a new session, or opening a new session in the same folder. Each lesson is its own invocation. The folder is the continuity, not the conversation. Common practice is to open a fresh session in the workspace and say `$teach next lesson for <topic>`.
 
 **How do I know it isn't teaching me something it made up?**
-You don't, on the skill's word alone. You read the primary sources. `teach` is not reliable enough to trust unchecked, and no skill built on an LLM is. The grounding machinery — `RESOURCES.md`, citations in every lesson, one recommended primary source per lesson — exists to make verification cheap, not to remove the need for it. The failure is not hypothetical: one user learning a 2x2 Rubik's cube was given fabricated move sequences that don't solve it. The diagnostic checklist for a case like that is model, harness, effort — and what the source was. Risk is highest in procedural domains with precise notation, and lowest where the output is immediately verifiable, like code you can run.
+You don't, on the skill's word alone. Read the primary sources. `teach` is not reliable enough to trust unchecked. The grounding machinery — `RESOURCES.md`, citations in every lesson, one recommended primary source per lesson — makes verification cheap; it does not remove the need. For a bad lesson, check the Codex model, reasoning effort, and cited source. Risk is highest in procedural domains with precise notation and lowest where the output is immediately verifiable.
 
 **The correct quiz answer is always the first option.**
 Confirmed by several people, on Sonnet, on Opus and on GLM, and still unfixed. `SKILL.md` now requires every answer to be the same number of words, which kills a different tell — the correct answer used to be the only fully-reasoned one — but says nothing about position. One contributor tested an instruction-level fix for position and reported the correct answer still landing in slot A 33 times out of 33 across nine lessons ([#335](https://github.com/mattpocock/skills/issues/335)), which points at a shuffling quiz component in `assets/` as the real fix rather than better wording. Until that ships, treat answer position as meaningless. Your `assets/` directory is yours to change, so asking for a component that shuffles at render time is a legitimate local fix.
@@ -76,8 +76,8 @@ No to the first, and not reliably to the second. Spacing and interleaving are pr
 **Is it only useful for code?**
 No, and the non-coding use is the larger part of the record: Korean, Japanese formal register, piano, guitar, board game design, OpenSCAD, film plots, Azure and CCNA certifications, university exams, and children of eight and ten getting printable books on escape rooms and fire salamanders. Nothing in the skill is programming-specific — mission, resources, zone of proximal development and drill work the same way in any domain. Within code, the strongest reported use is not learning a language from scratch but getting oriented in an unfamiliar codebase or a new team's stack.
 
-**Which model should I run it with?**
-There is no canonical answer, and the reported differences are large. Higher [reasoning effort](https://www.aihero.dev/ai-coding-dictionary/effort) has been reported to produce noticeably better lessons than the medium setting. One user ran the same skill through Copilot CLI with Codex and got a single 30-line HTML card where Claude Code produced a full lesson. It runs unmodified in Claude Cowork, subject to whether your organisation allows skills to be added there. If the lessons come out thin, change model, [harness](https://www.aihero.dev/ai-coding-dictionary/harness) or effort before rewriting your prompt.
+**Which Codex model and effort should I use?**
+There is no canonical answer. Higher [reasoning effort](https://www.aihero.dev/ai-coding-dictionary/effort) has produced noticeably better lessons than medium in reported use. If lessons come out thin, change the Codex model or reasoning effort before rewriting the prompt.
 
 ## It's working if
 
@@ -94,4 +94,4 @@ There is no canonical answer, and the reported differences are large. Higher [re
 
 `teach` is a **reach-for-it-anytime standalone**. It is not a step in a build chain and shares no artifacts with the engineering flow; it owns its directory and lives there for as long as the topic lasts.
 
-Its one real neighbour is [handoff](https://aihero.dev/skills-handoff), through the composition Matt named as the answer to "what do I do if I'm being grilled about something I don't understand?": don't stop the grilling to learn — `/handoff` to a teaching workspace, learn it there with `/teach`, then go back and pick up where you left off. The nearby alternative is [research](https://aihero.dev/skills-research), for when what you want is a cited document rather than lessons and retention. When you are not sure which skill or flow fits, [ask-matt](https://aihero.dev/skills-ask-matt) routes you over the whole set.
+Its one real neighbour is [handoff](https://aihero.dev/skills-handoff). If you're being grilled about something you don't understand, don't stop the grilling to learn: use `$handoff` to move into a teaching workspace, learn it there with `$teach`, then go back and pick up where you left off. The nearby alternative is [research](https://aihero.dev/skills-research), for when what you want is a cited document rather than lessons and retention. When you are not sure which skill or flow fits, [ask-devcraft](https://aihero.dev/skills-ask-devcraft) routes you over the whole set.

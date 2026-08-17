@@ -1,0 +1,5 @@
+interface:
+  display_name: "Direct Work"
+  short_description: "Execute a specified change directly"
+policy:
+  allow_implicit_invocation: false

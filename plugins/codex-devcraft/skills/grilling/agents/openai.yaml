@@ -1,0 +1,3 @@
+interface:
+  display_name: "Grilling"
+  short_description: "Drain a decision frontier one prompt at a time"

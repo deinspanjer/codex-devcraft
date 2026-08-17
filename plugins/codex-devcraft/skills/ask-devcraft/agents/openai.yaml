@@ -1,0 +1,5 @@
+interface:
+  display_name: "Ask Devcraft"
+  short_description: "Choose the lightest fitting workflow"
+policy:
+  allow_implicit_invocation: false

@@ -1,19 +1,14 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# NOTE: This is a dev-only script, intended for use by maintainers of this repo.
-# It is not a supported installer. Modifications to it — or requests for
-# modifications — will not be approved.
-#
-# Links all skills in the repository into the local skill directories used by
-# each agent harness:
-#   - ~/.claude/skills  — Claude Code
-#   - ~/.agents/skills  — Codex and other Agent Skills-compatible harnesses
+# Dev-only maintainer helper; this is not the supported installer.
+# Links the installable plugin skills into Codex's local skill directory:
+#   - ~/.agents/skills
 # Each entry is a symlink into this repo, so a `git pull` is all that's needed
 # to keep installed skills up to date.
 
 REPO="$(cd "$(dirname "$0")/.." && pwd)"
-DESTS=("$HOME/.claude/skills" "$HOME/.agents/skills")
+DESTS=("$HOME/.agents/skills")
 
 # Collect the repo's skills once, link into every destination.
 names=()
@@ -22,7 +17,7 @@ while IFS= read -r -d '' skill_md; do
   src="$(dirname "$skill_md")"
   names+=("$(basename "$src")")
   srcs+=("$src")
-done < <(find "$REPO/skills" -name SKILL.md -not -path '*/node_modules/*' -not -path '*/deprecated/*' -print0)
+done < <(find "$REPO/plugins/codex-devcraft/skills" -mindepth 2 -maxdepth 2 -name SKILL.md -print0)
 
 for DEST in "${DESTS[@]}"; do
   # If $DEST is a symlink that resolves into this repo, we'd end up writing the

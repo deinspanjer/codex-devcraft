@@ -1,0 +1,5 @@
+interface:
+  display_name: "Minimal Workflow"
+  short_description: "Ship a local change with one narrow check"
+policy:
+  allow_implicit_invocation: false

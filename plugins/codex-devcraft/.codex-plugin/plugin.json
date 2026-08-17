@@ -1,0 +1,33 @@
+{
+  "name": "codex-devcraft",
+  "version": "0.1.0",
+  "description": "Low-ceremony engineering skills for Codex",
+  "author": {
+    "name": "deinspanjer",
+    "url": "https://github.com/deinspanjer"
+  },
+  "homepage": "https://github.com/deinspanjer/codex-devcraft",
+  "repository": "https://github.com/deinspanjer/codex-devcraft",
+  "license": "MIT",
+  "keywords": [
+    "codex",
+    "engineering",
+    "skills"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Codex Devcraft",
+    "shortDescription": "Low-ceremony engineering workflows for Codex.",
+    "longDescription": "Practical Codex skills for direct work, proportional planning, implementation, testing, review, and handoff.",
+    "developerName": "deinspanjer",
+    "category": "Productivity",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/deinspanjer/codex-devcraft",
+    "defaultPrompt": [
+      "Help me choose the lightest Devcraft workflow for this task."
+    ]
+  }
+}

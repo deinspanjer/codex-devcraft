@@ -6,7 +6,7 @@ It refuses to treat a conflict as a text problem. Before touching a hunk it trac
 
 ## When to reach for it
 
-Type `/resolving-merge-conflicts`, or the [agent](https://www.aihero.dev/ai-coding-dictionary/agent) reaches for it automatically when a task fits.
+Type `$resolving-merge-conflicts`, or the [agent](https://www.aihero.dev/ai-coding-dictionary/agent) reaches for it automatically when a task fits.
 
 Reach for it when git has already stopped on conflicts it could not resolve itself. It is scoped to the conflict in front of you, not to anything either side of it:
 
@@ -24,9 +24,9 @@ You cannot preserve an intent you have not read. So the work starts in the histo
 
 ## Common questions
 
-**Claude Code already resolves conflicts pretty well on its own. Why does this need a skill?**
+**Codex already resolves conflicts pretty well. Why does this need a skill?**
 
-The added value is the "find the primary sources" and "run feedback loops" steps, which otherwise have to be prompted by hand every time. An unprompted agent will usually produce a plausible resolution from the diff alone and stop there. The skill's value is the two steps it will not let the agent skip — reading why each side exists, and running the checks afterwards. That is a thin margin over a good [model](https://www.aihero.dev/ai-coding-dictionary/model), and it is meant to be: at least one reader has predicted this is a whole skill that becomes a no-op as models improve.
+The added value is the "find the primary sources" and "run feedback loops" steps. Unprompted, Codex may produce a plausible resolution from the diff alone and stop there. The skill requires reading why each side exists and running checks afterwards. That is intentionally a thin margin over a good [model](https://www.aihero.dev/ai-coding-dictionary/model).
 
 **Should I keep parallel agents off the same files to avoid conflicts in the first place?**
 
@@ -48,4 +48,4 @@ Aborting throws away the resolution work and returns you to the same conflict, u
 
 ## Where it fits
 
-A reach-for-it-anytime standalone with no dependencies on any other skill: it starts when git stalls and ends when the tree is clean and committed. Its only real neighbour is [diagnosing-bugs](https://aihero.dev/skills-diagnosing-bugs), which takes over at the point where a merge resolved cleanly but the merged code misbehaves — a diagnosis problem, not a conflict one. It sits off the main idea-to-ship flow entirely, so [ask-matt](https://aihero.dev/skills-ask-matt) is the map for what runs before and after it.
+A reach-for-it-anytime standalone with no dependencies on any other skill: it starts when git stalls and ends when the tree is clean and committed. Its only real neighbour is [diagnosing-bugs](https://aihero.dev/skills-diagnosing-bugs), which takes over at the point where a merge resolved cleanly but the merged code misbehaves — a diagnosis problem, not a conflict one. It sits off the main idea-to-ship flow entirely, so [ask-devcraft](https://aihero.dev/skills-ask-devcraft) is the map for what runs before and after it.

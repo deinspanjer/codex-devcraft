@@ -1,6 +1,6 @@
-# Matt Pocock Skills
+# Codex Devcraft
 
-A collection of agent skills (slash commands and behaviors) loaded by Claude Code. Skills are organized into buckets and consumed by per-repo configuration emitted by `/setup-matt-pocock-skills`.
+A low-ceremony collection of Codex skills. Installable skills are cataloged as engineering or productivity workflows and consume per-repository configuration emitted by `$setup-devcraft`.
 
 ## Language
 
